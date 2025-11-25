@@ -197,178 +197,238 @@ class BibliotecaState(rx.State):
         self.multas = []
         return rx.redirect("/")
 
+# Componente de fondo Aurora
+def aurora_background():
+    return rx.box(
+        style={
+            "position": "fixed",
+            "top": "0",
+            "left": "0",
+            "width": "100%",
+            "height": "100%",
+            "background": "linear-gradient(-45deg, #191654, #7d1fa2, #c95191, #7d1fa2, #191654)",
+            "background_size": "400% 400%",
+            "animation": "aurora_gradient 15s ease infinite",
+            "z_index": "-1",
+        }
+    )
+
 # ---------------------------
 #       PÁGINA LOGIN
 # ---------------------------
 def login_page():
-    return rx.center(
+    return rx.fragment(
+        rx.html("""
+            <style>
+                @keyframes aurora_gradient {
+                    0% {
+                        background-position: 0% 50%;
+                    }
+                    50% {
+                        background-position: 100% 50%;
+                    }
+                    100% {
+                        background-position: 0% 50%;
+                    }
+                }
+            </style>
+        """),
         rx.box(
-            rx.card(
-                rx.vstack(
-                    rx.heading("Iniciar sesión", size="6", color="white"),
-                    rx.input(
-                        placeholder="Usuario",
-                        on_change=BibliotecaState.set_usuario_input,
-                        value=BibliotecaState.usuario_input,
+            aurora_background(),
+            rx.center(
+                rx.box(
+                    rx.card(
+                        rx.vstack(
+                            rx.heading("Iniciar sesión", size="6", color="white"),
+                            rx.input(
+                                placeholder="Usuario",
+                                on_change=BibliotecaState.set_usuario_input,
+                                value=BibliotecaState.usuario_input,
+                            ),
+                            rx.input(
+                                placeholder="Contraseña",
+                                type="password",
+                                on_change=BibliotecaState.set_pass_input,
+                                value=BibliotecaState.pass_input,
+                            ),
+                            rx.button(
+                                "Entrar",
+                                on_click=BibliotecaState.intentar_login,
+                                width="100%",
+                                bg="white",
+                                color="#7d1fa2",
+                            ),
+                            rx.text(BibliotecaState.login_error, color="red"),
+                            spacing="4",
+                            width="22em",
+                        ),
+                        padding="6",
+                        bg="#9a4cc0",
+                        border_radius="12px",
+                        box_shadow="0px 4px 12px rgba(0,0,0,0.3)",
                     ),
-                    rx.input(
-                        placeholder="Contraseña",
-                        type="password",
-                        on_change=BibliotecaState.set_pass_input,
-                        value=BibliotecaState.pass_input,
-                    ),
-                    rx.button(
-                        "Entrar",
-                        on_click=BibliotecaState.intentar_login,
-                        width="100%",
-                        bg="white",
-                        color="#7d1fa2",
-                    ),
-                    rx.text(BibliotecaState.login_error, color="red"),
-                    spacing="4",
-                    width="22em",
+                    display="flex",
+                    justify_content="center",
+                    align_items="center",
+                    height="100vh",
+                    width="100%",
                 ),
-                padding="6",
-                bg="#9a4cc0",
-                border_radius="12px",
-                box_shadow="0px 4px 12px rgba(0,0,0,0.3)",
             ),
-
-            # Centrado y fondo
-            display="flex",
-            justify_content="center",
-            align_items="center",
-            height="100vh",
-            width="100%",
-            
-        ),
+        )
     )
 
 # ---------------------------
 #     PÁGINA PRINCIPAL
 # ---------------------------
 def biblioteca_page():
-    return rx.cond(
-        BibliotecaState.autenticado,
+    return rx.fragment(
+        rx.html("""
+            <style>
+                @keyframes aurora_gradient {
+                    0% {
+                        background-position: 0% 50%;
+                    }
+                    50% {
+                        background-position: 100% 50%;
+                    }
+                    100% {
+                        background-position: 0% 50%;
+                    }
+                }
+            </style>
+        """),
+        rx.box(
+            aurora_background(),
+            rx.cond(
+                BibliotecaState.autenticado,
 
-        rx.center(rx.vstack(
-            rx.hstack(
-                rx.heading(
-                    f"Biblioteca — {BibliotecaState.nombre}",
-                    size="4",
-                    color=COLOR,
-                ),
-                rx.spacer(),
-                rx.button("Cerrar sesión", on_click=BibliotecaState.logout, bg=COLOR, color="white"),
-            ),
-
-            rx.tabs.root(
-                rx.tabs.list(
-                    rx.tabs.trigger("Buscar libros", value="libros", color=COLOR),
-                    rx.tabs.trigger("Mis préstamos", value="prestamos", color=COLOR),
-                    rx.tabs.trigger("Multas", value="multas", color=COLOR),
-                ),
-
-                # LIBROS
-                rx.tabs.content(
-                    rx.vstack(
-                        rx.text("Resultados:", size="2", color=COLOR),
-                        rx.foreach(
-                            BibliotecaState.libros,
-                            lambda libro: rx.card(
-                                rx.hstack(
-                                    rx.vstack(
-                                        rx.text(libro.titulo, weight="bold", color=COLOR),
-                                        rx.text(libro.autor),
-                                        rx.text(f"ISBN: {libro.isbn}"),
-                                        rx.text(f"Disponibles: {libro.disponibles}/{libro.cantidad_total}"),
-                                        rx.text(f"Publicado: {libro.fecha_publicacion}"),
-                                    ),
-                                    rx.button(
-                                        "Pedir",
-                                        on_click=lambda _=None, id=libro.id: BibliotecaState.pedir_prestamo(id),
-                                        disabled=(libro.disponibles <= 0),
-                                        bg=COLOR,
-                                        color="white",
-                                    ),
-                                ),
-                                padding="4",
-                                margin_y="2",
-                                border=f"2px solid {COLOR}",
-                            )
-                        )
+                rx.center(rx.vstack(
+                    rx.hstack(
+                        rx.heading(
+                            f"Biblioteca — {BibliotecaState.nombre}",
+                            size="4",
+                            color=COLOR,
+                            padding="4",
+                            margin_y="2",
+                            background_color="#1e1e1e",
+                            border=f"2px solid {COLOR}",
+                        ),
+                        rx.spacer(),
+                        rx.button("Cerrar sesión", on_click=BibliotecaState.logout, bg=COLOR, color="white"),
                     ),
-                    value="libros",
-                ),
 
-                # PRÉSTAMOS
-                rx.tabs.content(
-                    rx.vstack(
-                        rx.text("Mis préstamos:", size="2", color=COLOR),
-                        rx.foreach(
-                            BibliotecaState.prestamos,
-                            lambda p: rx.card(
-                                rx.vstack(
-                                    rx.hstack(
-                                        rx.vstack(
-                                            rx.text(p.titulo, weight="bold", color=COLOR),
-                                            rx.text(p.autor),
+                    rx.tabs.root(
+                        rx.tabs.list(
+                            rx.tabs.trigger("Buscar libros", value="libros", color="white"),
+                            rx.tabs.trigger("Mis préstamos", value="prestamos", color="white"),
+                            rx.tabs.trigger("Multas", value="multas", color="white"),
+                            background_color="#1e1e1e",
+                        ),
+
+                        # LIBROS
+                        rx.tabs.content(
+                            rx.vstack(
+                                rx.text("Resultados:", size="2", color='white'),
+                                rx.foreach(
+                                    BibliotecaState.libros,
+                                    lambda libro: rx.card(
+                                        rx.hstack(
+                                            rx.vstack(
+                                                rx.text(libro.titulo, weight="bold", color=COLOR),
+                                                rx.text(libro.autor),
+                                                rx.text(f"ISBN: {libro.isbn}"),
+                                                rx.text(f"Disponibles: {libro.disponibles}/{libro.cantidad_total}"),
+                                                rx.text(f"Publicado: {libro.fecha_publicacion}"),
+                                            ),
+                                            rx.button(
+                                                "Pedir",
+                                                on_click=lambda _=None, id=libro.id: BibliotecaState.pedir_prestamo(id),
+                                                disabled=(libro.disponibles <= 0),
+                                                bg=COLOR,
+                                                color="white",
+                                            ),
                                         ),
+                                        padding="4",
+                                        margin_y="2",
+                                        background_color="#1e1e1e",
+                                        border=f"2px solid {COLOR}",
+                                    )
+                                )
+                            ),
+                            value="libros",
+                        ),
+
+                        # PRÉSTAMOS
+                        rx.tabs.content(
+                            rx.vstack(
+                                rx.text("Mis préstamos:", size="2", color='white'),
+                                rx.foreach(
+                                    BibliotecaState.prestamos,
+                                    lambda p: rx.card(
                                         rx.vstack(
-                                            rx.text(f"Salida: {p.fecha_prestamo}"),
-                                            rx.text(f"Límite: {p.fecha_devolucion}"),
-                                            rx.text(f"Días restantes: {p.dias_restantes}"),
+                                            rx.hstack(
+                                                rx.vstack(
+                                                    rx.text(p.titulo, weight="bold", color=COLOR),
+                                                    rx.text(p.autor),
+                                                ),
+                                                rx.vstack(
+                                                    rx.text(f"Salida: {p.fecha_prestamo}"),
+                                                    rx.text(f"Límite: {p.fecha_devolucion}"),
+                                                    rx.text(f"Días restantes: {p.dias_restantes}"),
+                                                ),
+                                            ),
+                                            rx.text(f"Estado: {p.estado}", color=COLOR),
                                         ),
-                                    ),
-                                    rx.text(f"Estado: {p.estado}", color=COLOR),
-                                ),
-                                padding="4",
-                                margin_y="2",
-                                border=f"2px solid {COLOR}",
-                            )
-                        )
-                    ),
-                    value="prestamos",
+                                        padding="4",
+                                        margin_y="2",
+                                        background_color="#1e1e1e",
+                                        border=f"2px solid {COLOR}",
+                                    )
+                                )
+                            ),
+                            value="prestamos",
+                        ),
+
+                        # MULTAS
+                        rx.tabs.content(
+                            rx.vstack(
+                                rx.text("Multas:", size="2", color='white'),
+                                rx.foreach(
+                                    BibliotecaState.multas,
+                                    lambda m: rx.card(
+                                        rx.hstack(
+                                            rx.vstack(
+                                                rx.text(m.titulo, weight="bold", color=COLOR),
+                                                rx.text(f"Monto: ${m.monto:.2f}"),
+                                                rx.text(f"Fecha multa: {m.fecha_multa}"),
+                                                rx.text(f"Atraso: {m.dias_atraso} días"),
+                                            ),
+                                            rx.vstack(
+                                                rx.text(f"Estado: {m.estado}", color=COLOR),
+                                                rx.text(f"Vence: {m.fecha_vencimiento}"),
+                                            ),
+                                        ),
+                                        padding="4",
+                                        margin_y="2",
+                                        background_color="#1e1e1e",
+                                        border=f"2px solid {COLOR}",
+                                    )
+                                )
+                            ),
+                            value="multas",
+                        ),
+                    ),),
+                    on_mount=BibliotecaState.load_user,
+                    padding="6",
                 ),
 
-                # MULTAS
-                rx.tabs.content(
+                rx.center(
                     rx.vstack(
-                        rx.text("Multas:", size="2", color=COLOR),
-                        rx.foreach(
-                            BibliotecaState.multas,
-                            lambda m: rx.card(
-                                rx.hstack(
-                                    rx.vstack(
-                                        rx.text(m.titulo, weight="bold", color=COLOR),
-                                        rx.text(f"Monto: ${m.monto:.2f}"),
-                                        rx.text(f"Fecha multa: {m.fecha_multa}"),
-                                        rx.text(f"Atraso: {m.dias_atraso} días"),
-                                    ),
-                                    rx.vstack(
-                                        rx.text(f"Estado: {m.estado}", color=COLOR),
-                                        rx.text(f"Vence: {m.fecha_vencimiento}"),
-                                    ),
-                                ),
-                                padding="4",
-                                margin_y="2",
-                                border=f"2px solid {COLOR}",
-                            )
-                        )
-                    ),
-                    value="multas",
-                ),
-            ),),
-
-            on_mount=BibliotecaState.load_user,
-            padding="6",
-        ),
-
-        rx.center(
-            rx.vstack(
-                rx.heading("No autenticado", color=COLOR),
-                rx.link("Ir a login", href="/", color=COLOR),
-                spacing="4",
+                        rx.heading("No autenticado", color=COLOR),
+                        rx.link("Ir a login", href="/", color=COLOR),
+                        spacing="4",
+                    )
+                )
             )
         )
     )
