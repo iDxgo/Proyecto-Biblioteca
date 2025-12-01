@@ -1,1 +1,7 @@
-/biblioteca_venv
+assets/external/
+*.py[cod]
+*.db
+.states
+__pycache__/
+.web
+/Proyecto-Biblioteca_venv

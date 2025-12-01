@@ -17,16 +17,16 @@ class LibroDAO:
             
     def insertarLibro(self):
         self.bd.establecerConexionBD()
-        sp = "exec [dbo].[sp_CrearLibro] @Titulo=?, @Autor=?, @ISBN=?, @CantidadTotal=?, @CantidadDisponible=?, @FechaPublicacion=?"
+        sp = "exec [dbo].[sp_CrearLibro] @Titulo=%s, @Autor=%s, @ISBN=%s, @CantidadTotal=%s, @CantidadDisponible=%s, @FechaPublicacion=%s"
         param = (self.libro.titulo, self.libro.autor, self.libro.isbn, self.libro.cantidad_total, self.libro.cantidad_disponible, self.libro.fecha_publicacion)
         cursor = self.bd.conexion.cursor()
         cursor.execute(sp, param)
-        cursor.commit()
+        self.bd.conexion.commit()
         self.bd.cerrarConexion()
         
     def actualizarLibro(self):
         self.bd.establecerConexionBD()
-        sp = "exec [dbo].[sp_ActualizarLibro] @LibroID=?, @Titulo=?, @Autor=?, @ISBN=?, @CantidadTotal=?, @CantidadDisponible=?, @FechaPublicacion=?"
+        sp = "exec [dbo].[sp_ActualizarLibro] @LibroID=%s, @Titulo=%s, @Autor=%s, @ISBN=%s, @CantidadTotal=%s, @CantidadDisponible=%s, @FechaPublicacion=%s"
         params = (self.libro.libro_id, self.libro.titulo, self.libro.autor, self.libro.isbn, self.libro.cantidad_total, self.libro.cantidad_disponible, self.libro.fecha_publicacion)
         cursor = self.bd.conexion.cursor()
         cursor.execute(sp, params)
@@ -35,17 +35,17 @@ class LibroDAO:
 
     def eliminarLibro(self):
         self.bd.establecerConexionBD()
-        sp = "exec [dbo].[sp_BorrarLibro] @LibroID=?"
+        sp = "exec [dbo].[sp_BorrarLibro] @LibroID=%s"
         params = (self.libro.libro_id,)
         cursor = self.bd.conexion.cursor()
         cursor.execute(sp, params)
-        cursor.commit()
+        self.bd.conexion.commit()
         self.bd.cerrarConexion()
 
     def buscarLibro(self):
         self.bd.establecerConexionBD()
         cursor = self.bd.conexion.cursor()
-        sp = "exec [dbo].[sp_ConsultarLibro] @LibroID=?"
+        sp = "exec [dbo].[sp_ConsultarLibro] @LibroID=%s"
         param = [self.libro.libro_id]
         cursor.execute(sp, param)
         filas = cursor.fetchall()

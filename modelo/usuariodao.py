@@ -7,80 +7,129 @@ class UsuarioDAO:
         self.usuario = Usuario()
         
     def listarUsuarios(self):
-        self.bd.establecerConexionBD()
-        cursor = self.bd.conexion.cursor()
-        sp = "exec [dbo].[sp_ListarUsuarios]"
-        cursor.execute(sp)
-        filas = cursor.fetchall()
-        self.bd.cerrarConexion()
-        return filas
-            
-    def insertarUsuario(self):
-        self.bd.establecerConexionBD()
-        sp = "exec [dbo].[sp_CrearUsuario] @Username=?, @Password=?, @Nombre=?, @Email=?"
-        param = (self.usuario.username, self.usuario.password, self.usuario.nombre, self.usuario.email)
-        cursor = self.bd.conexion.cursor()
-        cursor.execute(sp, param)
-        cursor.commit()
-        self.bd.cerrarConexion()
-        
-    def actualizarUsuario(self):
-        self.bd.establecerConexionBD()
-        sp = "exec [dbo].[sp_ActualizarUsuario] @UsuarioID=?, @Username=?, @Password=?, @Nombre=?, @Email=?"
-        params = (self.usuario.usuario_id, self.usuario.username, self.usuario.password, self.usuario.nombre, self.usuario.email)
-        cursor = self.bd.conexion.cursor()
-        cursor.execute(sp, params)
-        self.bd.conexion.commit()
-        self.bd.cerrarConexion()
-
-    def eliminarUsuario(self):
-        self.bd.establecerConexionBD()
-        sp = "exec [dbo].[sp_BorrarUsuario] @UsuarioID=?"
-        params = (self.usuario.usuario_id,)
-        cursor = self.bd.conexion.cursor()
-        cursor.execute(sp, params)
-        cursor.commit()
-        self.bd.cerrarConexion()
-
-    def buscarUsuario(self):
-        self.bd.establecerConexionBD()
-        cursor = self.bd.conexion.cursor()
-        sp = "exec [dbo].[sp_ConsultarUsuario] @UsuarioID=?"
-        param = [self.usuario.usuario_id]
-        cursor.execute(sp, param)
-        filas = cursor.fetchall()
-        self.bd.cerrarConexion()
-        return filas
-    
-    def autenticarUsuarioDirecto(self, username, password):
-        """
-        Autenticación directa con consulta SQL
-        """
+        """Lista todos los usuarios"""
         try:
             self.bd.establecerConexionBD()
             cursor = self.bd.conexion.cursor()
-            
-            query = """
-            SELECT UsuarioID, Username, Nombre 
-            FROM Usuarios 
-            WHERE Username = ? AND Password = ?
-            """
-            param = (username, password)
-            cursor.execute(query, param)
+            cursor.execute("EXEC sp_ListarUsuarios")
             filas = cursor.fetchall()
+            cursor.close()
+            self.bd.cerrarConexion()
+            return filas
+        except Exception as e:
+            print(f"Error listando usuarios: {e}")
+            self.bd.cerrarConexion()
+            return []
+            
+    def insertarUsuario(self):
+        """Inserta un nuevo usuario"""
+        try:
+            self.bd.establecerConexionBD()
+            cursor = self.bd.conexion.cursor()
+            cursor.execute(
+                "EXEC sp_CrearUsuario %s, %s, %s, %s",
+                (self.usuario.username, self.usuario.password, 
+                 self.usuario.nombre, self.usuario.email)
+            )
+            self.bd.conexion.commit()
+            cursor.close()
+            self.bd.cerrarConexion()
+            print("✓ Usuario insertado")
+            return True
+        except Exception as e:
+            print(f"✗ Error insertando usuario: {e}")
+            if self.bd.conexion:
+                self.bd.conexion.rollback()
+            self.bd.cerrarConexion()
+            return False
+        
+    def actualizarUsuario(self):
+        """Actualiza un usuario existente"""
+        try:
+            self.bd.establecerConexionBD()
+            cursor = self.bd.conexion.cursor()
+            cursor.execute(
+                "EXEC sp_ActualizarUsuario %s, %s, %s, %s, %s",
+                (self.usuario.usuario_id, self.usuario.username, 
+                 self.usuario.password, self.usuario.nombre, self.usuario.email)
+            )
+            self.bd.conexion.commit()
+            cursor.close()
+            self.bd.cerrarConexion()
+            print("✓ Usuario actualizado")
+            return True
+        except Exception as e:
+            print(f"✗ Error actualizando usuario: {e}")
+            if self.bd.conexion:
+                self.bd.conexion.rollback()
+            self.bd.cerrarConexion()
+            return False
+
+    def eliminarUsuario(self):
+        """Elimina un usuario"""
+        try:
+            self.bd.establecerConexionBD()
+            cursor = self.bd.conexion.cursor()
+            cursor.execute("EXEC sp_BorrarUsuario %s", (self.usuario.usuario_id,))
+            self.bd.conexion.commit()
+            cursor.close()
+            self.bd.cerrarConexion()
+            print("✓ Usuario eliminado")
+            return True
+        except Exception as e:
+            print(f"✗ Error eliminando usuario: {e}")
+            if self.bd.conexion:
+                self.bd.conexion.rollback()
+            self.bd.cerrarConexion()
+            return False
+
+    def buscarUsuario(self):
+        """Busca un usuario por ID"""
+        try:
+            self.bd.establecerConexionBD()
+            cursor = self.bd.conexion.cursor()
+            cursor.execute("EXEC sp_ConsultarUsuario %s", (self.usuario.usuario_id,))
+            filas = cursor.fetchall()
+            cursor.close()
+            self.bd.cerrarConexion()
+            return filas
+        except Exception as e:
+            print(f"✗ Error buscando usuario: {e}")
+            self.bd.cerrarConexion()
+            return []
+    
+    def autenticarUsuarioDirecto(self, username, password):
+        """Autentica un usuario con username y password"""
+        try:
+            self.bd.establecerConexionBD()
+            
+            # Verificar que la conexión se estableció correctamente
+            if not self.bd.conexion:
+                print("✗ No se pudo establecer la conexión")
+                return None
+            
+            cursor = self.bd.conexion.cursor()
+            cursor.execute("EXEC sp_AutenticarUsuario %s, %s", (username, password))
+            row = cursor.fetchone()
+            cursor.close()
             self.bd.cerrarConexion()
             
-            if filas and len(filas) > 0:
-                usuario_data = filas[0]
-                usuario = Usuario()
-                usuario.usuario_id = usuario_data[0]
-                usuario.username = usuario_data[1]
-                usuario.nombre = usuario_data[2]
-                return usuario
+            if row:
+                # Poblar el objeto usuario
+                self.usuario.usuario_id = int(row[0])
+                self.usuario.nombre = str(row[1])
+                self.usuario.username = username
+                self.usuario.autenticado = True
+                self.usuario.login_error = ""
+                print(f"✓ Usuario autenticado: {username}")
+                return username
             else:
+                self.usuario.login_error = "Credenciales incorrectas."
+                print("✗ Credenciales incorrectas")
                 return None
                 
         except Exception as e:
-            print(f"Error en autenticación directa: {str(e)}")
+            print(f"✗ Error en autenticación: {e}")
+            self.usuario.login_error = f"Error: {str(e)}"
             self.bd.cerrarConexion()
             return None

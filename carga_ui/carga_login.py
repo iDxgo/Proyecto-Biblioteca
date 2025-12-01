@@ -36,32 +36,32 @@ class Load_ui_login(QtWidgets.QMainWindow):
         
 #4.- Funciones de login
     def iniciar_sesion(self):
-        """Valida las credenciales del usuario"""
         username = self.usuario_login.text().strip()
         password = self.password_login.text().strip()
-        
-        # Validar campos vacíos
+
         if not username or not password:
             self.mostrar_mensaje_error("Por favor, complete todos los campos")
             return
-        
+
         try:
-            # Intentar autenticar usuario
-            usuario_autenticado = self.usuariodao.autenticarUsuarioDirecto(username, password)
-            
-            if usuario_autenticado:
-                self.mostrar_mensaje_exito(f"Bienvenido, {usuario_autenticado.nombre}!")
-                
-                # Esperar 1 segundo y abrir menú principal
+            usuario_dao = UsuarioDAO()
+            resultado = usuario_dao.autenticarUsuarioDirecto(username, password)
+
+            if resultado:
+                nombre_usuario = usuario_dao.usuario.nombre
+                self.mostrar_mensaje_exito(f"¡Bienvenido, {nombre_usuario}!")
+
+                self.usuario_autenticado = usuario_dao.usuario
+
                 QTimer.singleShot(1000, self.abrir_menu_principal)
-                
             else:
                 self.mostrar_mensaje_error("Usuario o contraseña incorrectos")
                 self.limpiar_campos()
-                
-        except Exception as e:
-            self.mostrar_mensaje_error(f"Error de conexión: {str(e)}")
 
+        except Exception as e:
+            print(f"Error completo: {e}")
+            self.mostrar_mensaje_error(f"Error de conexión: {str(e)}")
+    
     def mostrar_mensaje_exito(self, mensaje):
         """Muestra mensaje de éxito"""
         self.label_mensaje.setStyleSheet("color: #4CAF50; font-weight: bold;")

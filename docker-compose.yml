@@ -1,0 +1,47 @@
+services:
+  sqlserver:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: biblioteca_sqlserver
+    environment:
+      - ACCEPT_EULA=Y
+      - SA_PASSWORD=BibliotecaPass123!
+      - MSSQL_PID=Developer
+    ports:
+      - "1433:1433"
+    volumes:
+      - sqlserver_data:/var/opt/mssql
+    restart: unless-stopped
+    healthcheck:
+      test: /opt/mssql-tools18/bin/sqlcmd -S localhost -U sa -P BibliotecaPass123! -C -Q "SELECT 1" || exit 1
+      interval: 10s
+      timeout: 3s
+      retries: 10
+      start_period: 10s
+    networks:
+      - biblioteca_network
+
+  reflex_app:
+    build: .
+    container_name: biblioteca_reflex
+    depends_on:
+      sqlserver:
+        condition: service_healthy
+    environment:
+      - DB_SERVER=sqlserver,1433
+      - DB_NAME=Biblioteca
+      - DB_USER=sa
+      - DB_PASSWORD=BibliotecaPass123!
+    ports:
+      - "3000:3000"
+      - "8000:8000"
+    restart: unless-stopped
+    networks:
+      - biblioteca_network
+
+networks:
+  biblioteca_network:
+    driver: bridge
+
+volumes:
+  sqlserver_data:
+    driver: local
