@@ -1,22 +1,41 @@
 # biblioteca.py
 import reflex as rx
-import pyodbc
+
 from datetime import datetime
 from pydantic import BaseModel
+import os
 
 COLOR = "#7d1fa2"   #  <<--- EL COLOR PRINCIPAL
 
 # ---------------------------
 #   CONEXIÓN A SQL SERVER
 # ---------------------------
-def db():
-    return pyodbc.connect(
-        r'DRIVER={SQL Server};'
-        r'SERVER=DESKTOP-SSUO5NK\SQLEXPRESS04;'
-        r'DATABASE=Biblioteca;'
-        r'Trusted_Connection=yes;'
-    )
+import pymssql
 
+
+def db():
+    """
+    Conexión a SQL Server usando pymssql
+    """
+    # Separar servidor y puerto
+    server_full = os.getenv('DB_SERVER', 'localhost,1433')
+    if ',' in server_full:
+        server, port = server_full.split(',')
+    else:
+        server = server_full
+        port = '1433'
+    
+    database = os.getenv('DB_NAME', 'Biblioteca')
+    username = os.getenv('DB_USER', 'sa')
+    password = os.getenv('DB_PASSWORD', 'BibliotecaPass123!')
+    
+    return pymssql.connect(
+        server=server,
+        port=int(port),
+        user=username,
+        password=password,
+        database=database
+    )
 # ------------------------------------
 #   MODELOS Pydantic
 # ------------------------------------
@@ -73,7 +92,7 @@ class BibliotecaState(rx.State):
         try:
             conn = db()
             cursor = conn.cursor()
-            cursor.execute("EXEC sp_AutenticarUsuario ?, ?", (self.usuario_input, self.pass_input))
+            cursor.execute("EXEC sp_AutenticarUsuario %s, %s", (self.usuario_input, self.pass_input))
             row = cursor.fetchone()
             cursor.close()
             conn.close()
@@ -131,7 +150,7 @@ class BibliotecaState(rx.State):
         try:
             conn = db()
             cursor = conn.cursor()
-            cursor.execute("EXEC sp_ObtenerPrestamosUsuario ?", (self.usuario_id,))
+            cursor.execute("EXEC sp_ObtenerPrestamosUsuario %s", (self.usuario_id,))
             rows = cursor.fetchall()
             cursor.close()
             conn.close()
@@ -156,7 +175,7 @@ class BibliotecaState(rx.State):
         try:
             conn = db()
             cursor = conn.cursor()
-            cursor.execute("EXEC sp_ObtenerMultasUsuario ?", (self.usuario_id,))
+            cursor.execute("EXEC sp_ObtenerMultasUsuario %s", (self.usuario_id,))
             rows = cursor.fetchall()
             cursor.close()
             conn.close()
@@ -184,7 +203,7 @@ class BibliotecaState(rx.State):
             
             conn = db()
             cursor = conn.cursor()
-            cursor.execute("EXEC sp_SolicitarPrestamo ?, ?", (self.usuario_id, int(libro_id)))
+            cursor.execute("EXEC sp_SolicitarPrestamo %s, %s ", (self.usuario_id, int(libro_id)))
             conn.commit()
             cursor.close()
             conn.close()

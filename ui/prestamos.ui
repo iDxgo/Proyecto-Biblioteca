@@ -1,0 +1,1007 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1000</width>
+    <height>650</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Sistema de Biblioteca - Gestión de Préstamos</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">/* === Estilo general - Tema Oscuro Biblioteca === */
+QMainWindow {
+    background-color: #121212;
+    color: #e0e0e0;
+    font-family: &quot;Segoe UI&quot;, &quot;SF Pro Display&quot;, &quot;Roboto&quot;, sans-serif;
+    font-size: 14px;
+    font-weight: 400;
+}
+
+/* === Frames === */
+QFrame {
+    background-color: #1e1e1e;
+    border-radius: 8px;
+    border: 1px solid #2d2d2d;
+}
+
+/* Barra superior */
+#frame_superior {
+    background-color: #1a1a1a;
+    border: none;
+    border-radius: 0px;
+    border-bottom: 2px solid #7b1fa2;
+}
+
+/* Panel lateral */
+#frame_lateral {
+    background-color: #1a1a1a;
+    border-right: 2px solid #7b1fa2;
+    border-radius: 0px;
+}
+
+/* Área principal */
+#frame_paginas {
+    background-color: #1e1e1e;
+    border-radius: 0px;
+}
+
+/* === Botones === */
+QPushButton {
+    background-color: #4a148c;
+    color: #ffffff;
+    border: 1px solid #6a1b9a;
+    border-radius: 6px;
+    padding: 10px 16px;
+    font-weight: 500;
+    font-size: 14px;
+    letter-spacing: 0.5px;
+    background: qlineargradient(x1:0, y1:0, x2:0, y2:1,
+        stop:0 #7b1fa2, stop:1 #4a148c);
+}
+
+QPushButton:hover {
+    background-color: #6a1b9a;
+    color: #ffffff;
+    border: 1px solid #8e24aa;
+}
+
+QPushButton:pressed {
+    background-color: #38006b;
+    color: #ffffff;
+    border: 1px solid #4a148c;
+    background: qlineargradient(x1:0, y1:0, x2:0, y2:1,
+        stop:0 #4a148c, stop:1 #38006b);
+}
+
+/* Botón principal (Menú) */
+#boton_menu {
+    background-color: #7b1fa2;
+    color: white;
+    border: none;
+    font-weight: 600;
+    background: qlineargradient(x1:0, y1:0, x2:0, y2:1,
+        stop:0 #9c27b0, stop:1 #7b1fa2);
+}
+#boton_menu:hover {
+    background-color: #8e24aa;
+    background: qlineargradient(x1:0, y1:0, x2:0, y2:1,
+        stop:0 #ab47bc, stop:1 #8e24aa);
+}
+#boton_menu:pressed {
+    background-color: #6a1b9a;
+    background: qlineargradient(x1:0, y1:0, x2:0, y2:1,
+        stop:0 #7b1fa2, stop:1 #6a1b9a);
+}
+
+/* Botón salir */
+#boton_salir {
+    background-color: #c62828;
+    color: white;
+    border: none;
+    background: qlineargradient(x1:0, y1:0, x2:0, y2:1,
+        stop:0 #ef5350, stop:1 #b71c1c);
+}
+#boton_salir:hover {
+    background-color: #d32f2f;
+    background: qlineargradient(x1:0, y1:0, x2:0, y2:1,
+        stop:0 #f44336, stop:1 #c62828);
+}
+#boton_salir:pressed {
+    background-color: #b71c1c;
+    background: qlineargradient(x1:0, y1:0, x2:0, y2:1,
+        stop:0 #c62828, stop:1 #b71c1c);
+}
+
+/* === Campos de texto === */
+QLineEdit {
+    background-color: #2d2d2d;
+    color: #e0e0e0;
+    border: 1px solid #424242;
+    border-radius: 4px;
+    padding: 8px 12px;
+    font-size: 14px;
+    font-weight: 400;
+    selection-background-color: #7b1fa2;
+}
+
+QLineEdit:focus {
+    border: 1px solid #7b1fa2;
+    background-color: #333333;
+    box-shadow: 0px 0px 5px rgba(123, 31, 162, 0.5);
+}
+
+QLineEdit:placeholder {
+    color: #666666;
+}
+
+/* === Labels === */
+QLabel {
+    color: #bdbdbd;
+    font-weight: 500;
+    font-size: 14px;
+    border: none;
+}
+
+/* Label inferior o secundario */
+#label_mensaje {
+    color: #9e9e9e;
+    font-size: 10px;
+    font-style: italic;
+}
+
+/* === Stacked Widget === */
+QStackedWidget {
+    background-color: #1e1e1e;
+    border: 1px solid #2d2d2d;
+    border-radius: 8px;
+}
+
+/* === Scrollbars === */
+QScrollBar:vertical {
+    border: none;
+    background: #2d2d2d;
+    width: 12px;
+    border-radius: 6px;
+}
+QScrollBar::handle:vertical {
+    background: #4a148c;
+    min-height: 25px;
+    border-radius: 6px;
+}
+QScrollBar::handle:vertical:hover {
+    background: #6a1b9a;
+}
+QScrollBar::add-line:vertical,
+QScrollBar::sub-line:vertical {
+    height: 0;
+}
+
+QScrollBar:horizontal {
+    border: none;
+    background: #2d2d2d;
+    height: 12px;
+    border-radius: 6px;
+}
+QScrollBar::handle:horizontal {
+    background: #4a148c;
+    min-width: 25px;
+    border-radius: 6px;
+}
+QScrollBar::handle:horizontal:hover {
+    background: #6a1b9a;
+}
+
+/* === Layouts === */
+QVBoxLayout, QHBoxLayout {
+    spacing: 12px;
+}
+
+/* === Botones laterales === */
+#boton_crear, #boton_buscar, #boton_actualizar, #boton_eliminar, #boton_consultar_todos {
+    background-color: #2d2d2d;
+    border: 1px solid #424242;
+    color: #bdbdbd;
+    font-weight: 500;
+    font-size: 14px;
+    text-align: left;
+    padding: 12px 16px;
+}
+
+#boton_crear:hover, 
+#boton_buscar:hover, 
+#boton_actualizar:hover, 
+#boton_eliminar:hover,
+#boton_consultar_todos:hover {
+    background-color: #333333;
+    border: 1px solid #7b1fa2;
+    color: #e0e0e0;
+    background: qlineargradient(x1:0, y1:0, x2:1, y2:0,
+        stop:0 #2d2d2d, stop:1 #4a148c);
+}
+
+#boton_crear:pressed, 
+#boton_buscar:pressed, 
+#boton_actualizar:pressed, 
+#boton_eliminar:pressed,
+#boton_consultar_todos:pressed {
+    background-color: #4a148c;
+    border: 1px solid #6a1b9a;
+    color: #ffffff;
+}
+
+/* === Tooltips === */
+QToolTip {
+    background-color: #2d2d2d;
+    color: #e0e0e0;
+    border: 1px solid #7b1fa2;
+    padding: 8px;
+    border-radius: 6px;
+    font-size: 13px;
+    font-weight: 500;
+    box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.3);
+}
+
+/* === Tablas === */
+QTableWidget {
+    background-color: #1e1e1e;
+    color: #e0e0e0;
+    gridline-color: #424242;
+    border: 1px solid #2d2d2d;
+    border-radius: 6px;
+    font-size: 13px;
+    font-weight: 400;
+    selection-background-color: #7b1fa2;
+    selection-color: #ffffff;
+    alternate-background-color: #252525;
+}
+
+QHeaderView::section {
+    background-color: #4a148c;
+    color: #ffffff;
+    border: 1px solid #6a1b9a;
+    border-radius: 4px;
+    font-weight: 600;
+    font-size: 13px;
+    padding: 8px;
+}
+
+QHeaderView::section:hover {
+    background-color: #6a1b9a;
+}
+
+QTableWidget::item {
+    padding: 6px;
+    border: none;
+}
+
+QTableWidget::item:selected {
+    background-color: #7b1fa2;
+    color: #ffffff;
+}
+
+/* Efectos adicionales para profundidad */
+#frame_superior {
+    border-bottom: 2px solid #7b1fa2;
+}
+
+#frame_lateral {
+    border-right: 2px solid #7b1fa2;
+}
+
+/* Efectos de sombra suaves */
+QFrame {
+    box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+QPushButton {
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+QLineEdit:focus {
+    box-shadow: 0px 0px 8px rgba(123, 31, 162, 0.4);
+}</string>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <layout class="QVBoxLayout" name="verticalLayout" stretch="1,8">
+    <item>
+     <widget class="QFrame" name="frame_superior">
+      <property name="minimumSize">
+       <size>
+        <width>0</width>
+        <height>50</height>
+       </size>
+      </property>
+      <property name="maximumSize">
+       <size>
+        <width>16777215</width>
+        <height>50</height>
+       </size>
+      </property>
+      <property name="frameShape">
+       <enum>QFrame::StyledPanel</enum>
+      </property>
+      <property name="frameShadow">
+       <enum>QFrame::Raised</enum>
+      </property>
+      <layout class="QHBoxLayout" name="horizontalLayout">
+       <item>
+        <widget class="QPushButton" name="boton_menu">
+         <property name="minimumSize">
+          <size>
+           <width>200</width>
+           <height>35</height>
+          </size>
+         </property>
+         <property name="text">
+          <string>Menú Principal</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <spacer name="horizontalSpacer">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>226</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item>
+        <widget class="QLabel" name="label_titulo">
+         <property name="text">
+          <string>GESTIÓN DE PRÉSTAMOS</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <spacer name="horizontalSpacer_2">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>226</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item>
+        <widget class="QPushButton" name="boton_salir">
+         <property name="minimumSize">
+          <size>
+           <width>200</width>
+           <height>35</height>
+          </size>
+         </property>
+         <property name="text">
+          <string>Salir</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+    </item>
+    <item>
+     <widget class="QFrame" name="frame_central">
+      <property name="frameShape">
+       <enum>QFrame::StyledPanel</enum>
+      </property>
+      <property name="frameShadow">
+       <enum>QFrame::Raised</enum>
+      </property>
+      <layout class="QHBoxLayout" name="horizontalLayout_2">
+       <property name="spacing">
+        <number>0</number>
+       </property>
+       <property name="leftMargin">
+        <number>0</number>
+       </property>
+       <property name="topMargin">
+        <number>0</number>
+       </property>
+       <property name="rightMargin">
+        <number>0</number>
+       </property>
+       <property name="bottomMargin">
+        <number>0</number>
+       </property>
+       <item>
+        <widget class="QFrame" name="frame_lateral">
+         <property name="minimumSize">
+          <size>
+           <width>200</width>
+           <height>0</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>200</width>
+           <height>16777215</height>
+          </size>
+         </property>
+         <property name="frameShape">
+          <enum>QFrame::StyledPanel</enum>
+         </property>
+         <property name="frameShadow">
+          <enum>QFrame::Raised</enum>
+         </property>
+         <layout class="QVBoxLayout" name="verticalLayout_2">
+          <item>
+           <widget class="QPushButton" name="boton_crear">
+            <property name="text">
+             <string>Crear Préstamo</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="boton_buscar">
+            <property name="text">
+             <string>Buscar Préstamo</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="boton_actualizar">
+            <property name="text">
+             <string>Actualizar Préstamo</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="boton_eliminar">
+            <property name="text">
+             <string>Eliminar Préstamo</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="boton_consultar_todos">
+            <property name="text">
+             <string>Consultar Todos</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item>
+        <widget class="QFrame" name="frame_paginas">
+         <property name="frameShape">
+          <enum>QFrame::StyledPanel</enum>
+         </property>
+         <property name="frameShadow">
+          <enum>QFrame::Raised</enum>
+         </property>
+         <layout class="QVBoxLayout" name="verticalLayout_3">
+          <item>
+           <widget class="QStackedWidget" name="stackedWidget">
+            <property name="currentIndex">
+             <number>4</number>
+            </property>
+            <widget class="QWidget" name="page_crear">
+             <layout class="QHBoxLayout" name="horizontalLayout_3">
+              <item>
+               <layout class="QVBoxLayout" name="verticalLayout_4">
+                <item>
+                 <layout class="QGridLayout" name="gridLayout_crear">
+                  <item row="0" column="0">
+                   <widget class="QLabel" name="label_usuario_id_crear">
+                    <property name="text">
+                     <string>ID Usuario</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="0" column="1">
+                   <widget class="QLineEdit" name="usuario_id_crear">
+                    <property name="minimumSize">
+                     <size>
+                      <width>150</width>
+                      <height>0</height>
+                     </size>
+                    </property>
+                    <property name="placeholderText">
+                     <string>ID del usuario</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="1" column="0">
+                   <widget class="QLabel" name="label_libro_id_crear">
+                    <property name="text">
+                     <string>ID Libro</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="1" column="1">
+                   <widget class="QLineEdit" name="libro_id_crear">
+                    <property name="placeholderText">
+                     <string>ID del libro</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="2" column="0">
+                   <widget class="QLabel" name="label_fecha_prestamo_crear">
+                    <property name="text">
+                     <string>Fecha Préstamo</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="2" column="1">
+                   <widget class="QLineEdit" name="fecha_prestamo_crear">
+                    <property name="placeholderText">
+                     <string>YYYY-MM-DD HH:MM:SS</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="3" column="0">
+                   <widget class="QLabel" name="label_fecha_devolucion_crear">
+                    <property name="text">
+                     <string>Fecha Devolución</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="3" column="1">
+                   <widget class="QLineEdit" name="fecha_devolucion_crear">
+                    <property name="placeholderText">
+                     <string>YYYY-MM-DD HH:MM:SS</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="4" column="0">
+                   <widget class="QLabel" name="label_fecha_devolucion_real_crear">
+                    <property name="text">
+                     <string>Fecha Devolución Real</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="4" column="1">
+                   <widget class="QLineEdit" name="fecha_devolucion_real_crear">
+                    <property name="placeholderText">
+                     <string>YYYY-MM-DD HH:MM:SS (Opcional)</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="5" column="0">
+                   <widget class="QLabel" name="label_estado_crear">
+                    <property name="text">
+                     <string>Estado</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="5" column="1">
+                   <widget class="QLineEdit" name="estado_crear">
+                    <property name="placeholderText">
+                     <string>Activo, Devuelto, Vencido</string>
+                    </property>
+                   </widget>
+                  </item>
+                 </layout>
+                </item>
+                <item>
+                 <widget class="QPushButton" name="accion_guardar">
+                  <property name="text">
+                   <string>Guardar Préstamo</string>
+                  </property>
+                 </widget>
+                </item>
+               </layout>
+              </item>
+             </layout>
+            </widget>
+            <widget class="QWidget" name="page_buscar">
+             <layout class="QVBoxLayout" name="verticalLayout_7">
+              <item>
+               <layout class="QGridLayout" name="gridLayout_buscar">
+                <item row="0" column="0">
+                 <widget class="QLabel" name="label_prestamo_id_buscar">
+                  <property name="text">
+                   <string>ID Préstamo</string>
+                  </property>
+                 </widget>
+                </item>
+                <item row="0" column="1">
+                 <widget class="QLineEdit" name="prestamo_id_buscar">
+                  <property name="minimumSize">
+                   <size>
+                    <width>150</width>
+                    <height>0</height>
+                   </size>
+                  </property>
+                  <property name="placeholderText">
+                   <string>Ingrese ID a buscar</string>
+                  </property>
+                 </widget>
+                </item>
+                <item row="0" column="2">
+                 <widget class="QPushButton" name="buscar_buscar">
+                  <property name="text">
+                   <string>Buscar</string>
+                  </property>
+                 </widget>
+                </item>
+                <item row="1" column="0">
+                 <widget class="QLabel" name="label_usuario_id_buscar">
+                  <property name="text">
+                   <string>ID Usuario</string>
+                  </property>
+                 </widget>
+                </item>
+                <item row="1" column="1">
+                 <widget class="QLineEdit" name="usuario_id_buscar"/>
+                </item>
+                <item row="2" column="0">
+                 <widget class="QLabel" name="label_libro_id_buscar">
+                  <property name="text">
+                   <string>ID Libro</string>
+                  </property>
+                 </widget>
+                </item>
+                <item row="2" column="1">
+                 <widget class="QLineEdit" name="libro_id_buscar"/>
+                </item>
+                <item row="3" column="0">
+                 <widget class="QLabel" name="label_fecha_prestamo_buscar">
+                  <property name="text">
+                   <string>Fecha Préstamo</string>
+                  </property>
+                 </widget>
+                </item>
+                <item row="3" column="1">
+                 <widget class="QLineEdit" name="fecha_prestamo_buscar"/>
+                </item>
+                <item row="4" column="0">
+                 <widget class="QLabel" name="label_fecha_devolucion_buscar">
+                  <property name="text">
+                   <string>Fecha Devolución</string>
+                  </property>
+                 </widget>
+                </item>
+                <item row="4" column="1">
+                 <widget class="QLineEdit" name="fecha_devolucion_buscar"/>
+                </item>
+                <item row="5" column="0">
+                 <widget class="QLabel" name="label_fecha_devolucion_real_buscar">
+                  <property name="text">
+                   <string>Fecha Devolución Real</string>
+                  </property>
+                 </widget>
+                </item>
+                <item row="5" column="1">
+                 <widget class="QLineEdit" name="fecha_devolucion_real_buscar"/>
+                </item>
+                <item row="6" column="0">
+                 <widget class="QLabel" name="label_estado_buscar">
+                  <property name="text">
+                   <string>Estado</string>
+                  </property>
+                 </widget>
+                </item>
+                <item row="6" column="1">
+                 <widget class="QLineEdit" name="estado_buscar"/>
+                </item>
+               </layout>
+              </item>
+              <item>
+               <widget class="QPushButton" name="accion_limpiar">
+                <property name="text">
+                 <string>Limpiar Búsqueda</string>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </widget>
+            <widget class="QWidget" name="page_actualizar">
+             <layout class="QHBoxLayout" name="horizontalLayout_4">
+              <item>
+               <layout class="QVBoxLayout" name="verticalLayout_5">
+                <item>
+                 <layout class="QGridLayout" name="gridLayout_actualizar">
+                  <item row="0" column="0">
+                   <widget class="QLabel" name="label_prestamo_id_actualizar">
+                    <property name="text">
+                     <string>ID Préstamo</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="0" column="1">
+                   <widget class="QLineEdit" name="prestamo_id_actualizar">
+                    <property name="minimumSize">
+                     <size>
+                      <width>150</width>
+                      <height>0</height>
+                     </size>
+                    </property>
+                    <property name="placeholderText">
+                     <string>Ingrese ID a actualizar</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="0" column="2">
+                   <widget class="QPushButton" name="buscar_actualizar">
+                    <property name="text">
+                     <string>Buscar</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="1" column="0">
+                   <widget class="QLabel" name="label_usuario_id_actualizar">
+                    <property name="text">
+                     <string>ID Usuario</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="1" column="1">
+                   <widget class="QLineEdit" name="usuario_id_actualizar"/>
+                  </item>
+                  <item row="2" column="0">
+                   <widget class="QLabel" name="label_libro_id_actualizar">
+                    <property name="text">
+                     <string>ID Libro</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="2" column="1">
+                   <widget class="QLineEdit" name="libro_id_actualizar"/>
+                  </item>
+                  <item row="3" column="0">
+                   <widget class="QLabel" name="label_fecha_prestamo_actualizar">
+                    <property name="text">
+                     <string>Fecha Préstamo</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="3" column="1">
+                   <widget class="QLineEdit" name="fecha_prestamo_actualizar"/>
+                  </item>
+                  <item row="4" column="0">
+                   <widget class="QLabel" name="label_fecha_devolucion_actualizar">
+                    <property name="text">
+                     <string>Fecha Devolución</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="4" column="1">
+                   <widget class="QLineEdit" name="fecha_devolucion_actualizar"/>
+                  </item>
+                  <item row="5" column="0">
+                   <widget class="QLabel" name="label_fecha_devolucion_real_actualizar">
+                    <property name="text">
+                     <string>Fecha Devolución Real</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="5" column="1">
+                   <widget class="QLineEdit" name="fecha_devolucion_real_actualizar"/>
+                  </item>
+                  <item row="6" column="0">
+                   <widget class="QLabel" name="label_estado_actualizar">
+                    <property name="text">
+                     <string>Estado</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="6" column="1">
+                   <widget class="QLineEdit" name="estado_actualizar"/>
+                  </item>
+                 </layout>
+                </item>
+                <item>
+                 <widget class="QPushButton" name="accion_actualizar">
+                  <property name="text">
+                   <string>Actualizar Préstamo</string>
+                  </property>
+                 </widget>
+                </item>
+               </layout>
+              </item>
+             </layout>
+            </widget>
+            <widget class="QWidget" name="page_eliminar">
+             <layout class="QVBoxLayout" name="verticalLayout_6">
+              <item>
+               <layout class="QGridLayout" name="gridLayout_eliminar">
+                <item row="0" column="0">
+                 <widget class="QLabel" name="label_prestamo_id_eliminar">
+                  <property name="text">
+                   <string>ID Préstamo</string>
+                  </property>
+                 </widget>
+                </item>
+                <item row="0" column="1">
+                 <widget class="QLineEdit" name="prestamo_id_eliminar">
+                  <property name="minimumSize">
+                   <size>
+                    <width>150</width>
+                    <height>0</height>
+                   </size>
+                  </property>
+                  <property name="placeholderText">
+                   <string>Ingrese ID a eliminar</string>
+                  </property>
+                 </widget>
+                </item>
+                <item row="0" column="2">
+                 <widget class="QPushButton" name="buscar_eliminar">
+                  <property name="text">
+                   <string>Buscar</string>
+                  </property>
+                 </widget>
+                </item>
+                <item row="1" column="0">
+                 <widget class="QLabel" name="label_usuario_id_eliminar">
+                  <property name="text">
+                   <string>ID Usuario</string>
+                  </property>
+                 </widget>
+                </item>
+                <item row="1" column="1">
+                 <widget class="QLineEdit" name="usuario_id_eliminar"/>
+                </item>
+                <item row="2" column="0">
+                 <widget class="QLabel" name="label_libro_id_eliminar">
+                  <property name="text">
+                   <string>ID Libro</string>
+                  </property>
+                 </widget>
+                </item>
+                <item row="2" column="1">
+                 <widget class="QLineEdit" name="libro_id_eliminar"/>
+                </item>
+                <item row="3" column="0">
+                 <widget class="QLabel" name="label_fecha_prestamo_eliminar">
+                  <property name="text">
+                   <string>Fecha Préstamo</string>
+                  </property>
+                 </widget>
+                </item>
+                <item row="3" column="1">
+                 <widget class="QLineEdit" name="fecha_prestamo_eliminar"/>
+                </item>
+                <item row="4" column="0">
+                 <widget class="QLabel" name="label_fecha_devolucion_eliminar">
+                  <property name="text">
+                   <string>Fecha Devolución</string>
+                  </property>
+                 </widget>
+                </item>
+                <item row="4" column="1">
+                 <widget class="QLineEdit" name="fecha_devolucion_eliminar"/>
+                </item>
+                <item row="5" column="0">
+                 <widget class="QLabel" name="label_fecha_devolucion_real_eliminar">
+                  <property name="text">
+                   <string>Fecha Devolución Real</string>
+                  </property>
+                 </widget>
+                </item>
+                <item row="5" column="1">
+                 <widget class="QLineEdit" name="fecha_devolucion_real_eliminar"/>
+                </item>
+                <item row="6" column="0">
+                 <widget class="QLabel" name="label_estado_eliminar">
+                  <property name="text">
+                   <string>Estado</string>
+                  </property>
+                 </widget>
+                </item>
+                <item row="6" column="1">
+                 <widget class="QLineEdit" name="estado_eliminar"/>
+                </item>
+               </layout>
+              </item>
+              <item>
+               <widget class="QPushButton" name="accion_eliminar">
+                <property name="text">
+                 <string>Eliminar Préstamo</string>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </widget>
+            <widget class="QWidget" name="page_consultar_todos">
+             <layout class="QVBoxLayout" name="verticalLayout_9">
+              <item>
+               <widget class="QPushButton" name="boton_refrescar">
+                <property name="text">
+                 <string>Refrescar Lista</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QTableWidget" name="tabla_prestamos">
+                <property name="styleSheet">
+                 <string notr="true">/* Tabla personalizada para préstamos */
+QTableWidget {
+    background-color: #1e1e1e;
+    color: #e0e0e0;
+    gridline-color: #424242;
+    border: 1px solid #2d2d2d;
+    border-radius: 6px;
+    font-size: 11px;
+    font-weight: 400;
+    selection-background-color: #7b1fa2;
+    selection-color: #ffffff;
+    alternate-background-color: #252525;
+}
+
+QHeaderView::section {
+    background-color: #4a148c;
+    color: #ffffff;
+    border: 1px solid #6a1b9a;
+    border-radius: 4px;
+    font-weight: 600;
+    font-size: 11px;
+    padding: 6px;
+}
+
+QTableWidget::item {
+    padding: 4px;
+    border: none;
+}</string>
+                </property>
+                <column>
+                 <property name="text">
+                  <string>ID</string>
+                 </property>
+                </column>
+                <column>
+                 <property name="text">
+                  <string>Usuario ID</string>
+                 </property>
+                </column>
+                <column>
+                 <property name="text">
+                  <string>Libro ID</string>
+                 </property>
+                </column>
+                <column>
+                 <property name="text">
+                  <string>Fecha Préstamo</string>
+                 </property>
+                </column>
+                <column>
+                 <property name="text">
+                  <string>Fecha Devolución</string>
+                 </property>
+                </column>
+                <column>
+                 <property name="text">
+                  <string>Fecha Real</string>
+                 </property>
+                </column>
+                <column>
+                 <property name="text">
+                  <string>Estado</string>
+                 </property>
+                </column>
+               </widget>
+              </item>
+             </layout>
+            </widget>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

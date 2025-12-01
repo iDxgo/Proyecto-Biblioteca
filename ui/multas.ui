@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Sistema de Biblioteca - Gestión de Usuarios</string>
+   <string>Sistema de Biblioteca - Gestión de Multas</string>
   </property>
   <property name="styleSheet">
    <string notr="true">/* === Estilo general - Tema Oscuro Biblioteca === */
@@ -359,7 +359,7 @@ QLineEdit:focus {
        <item>
         <widget class="QLabel" name="label_titulo">
          <property name="text">
-          <string>GESTIÓN DE USUARIOS</string>
+          <string>GESTIÓN DE MULTAS</string>
          </property>
          <property name="alignment">
           <set>Qt::AlignCenter</set>
@@ -443,28 +443,28 @@ QLineEdit:focus {
           <item>
            <widget class="QPushButton" name="boton_crear">
             <property name="text">
-             <string>Crear Usuario</string>
+             <string>Crear Multa</string>
             </property>
            </widget>
           </item>
           <item>
            <widget class="QPushButton" name="boton_buscar">
             <property name="text">
-             <string>Buscar Usuario</string>
+             <string>Buscar Multa</string>
             </property>
            </widget>
           </item>
           <item>
            <widget class="QPushButton" name="boton_actualizar">
             <property name="text">
-             <string>Actualizar Usuario</string>
+             <string>Actualizar Multa</string>
             </property>
            </widget>
           </item>
           <item>
            <widget class="QPushButton" name="boton_eliminar">
             <property name="text">
-             <string>Eliminar Usuario</string>
+             <string>Eliminar Multa</string>
             </property>
            </widget>
           </item>
@@ -490,7 +490,7 @@ QLineEdit:focus {
           <item>
            <widget class="QStackedWidget" name="stackedWidget">
             <property name="currentIndex">
-             <number>0</number>
+             <number>4</number>
             </property>
             <widget class="QWidget" name="page_crear">
              <layout class="QHBoxLayout" name="horizontalLayout_3">
@@ -498,82 +498,79 @@ QLineEdit:focus {
                <layout class="QVBoxLayout" name="verticalLayout_4">
                 <item>
                  <layout class="QGridLayout" name="gridLayout_crear">
-                  <item row="3" column="1">
-                   <widget class="QLineEdit" name="email_crear">
-                    <property name="placeholderText">
-                     <string>usuario@email.com</string>
-                    </property>
-                   </widget>
-                  </item>
-                  <item row="3" column="0">
-                   <widget class="QLabel" name="label_email_crear">
-                    <property name="text">
-                     <string>Email</string>
-                    </property>
-                   </widget>
-                  </item>
                   <item row="0" column="0">
-                   <widget class="QLabel" name="label_username_crear">
+                   <widget class="QLabel" name="label_prestamo_id_crear">
                     <property name="text">
-                     <string>Username</string>
+                     <string>ID Préstamo</string>
                     </property>
                    </widget>
                   </item>
                   <item row="0" column="1">
-                   <widget class="QLineEdit" name="username_crear">
+                   <widget class="QLineEdit" name="prestamo_id_crear">
                     <property name="minimumSize">
                      <size>
-                      <width>200</width>
+                      <width>150</width>
                       <height>0</height>
                      </size>
                     </property>
                     <property name="placeholderText">
-                     <string>Nombre de usuario</string>
-                    </property>
-                   </widget>
-                  </item>
-                  <item row="2" column="0">
-                   <widget class="QLabel" name="label_nombre_crear">
-                    <property name="text">
-                     <string>Nombre</string>
-                    </property>
-                   </widget>
-                  </item>
-                  <item row="2" column="1">
-                   <widget class="QLineEdit" name="nombre_crear">
-                    <property name="placeholderText">
-                     <string>Nombre completo</string>
+                     <string>ID del préstamo relacionado</string>
                     </property>
                    </widget>
                   </item>
                   <item row="1" column="0">
-                   <widget class="QLabel" name="label_password_crear">
+                   <widget class="QLabel" name="label_usuario_id_crear">
                     <property name="text">
-                     <string>Password</string>
+                     <string>ID Usuario</string>
                     </property>
                    </widget>
                   </item>
                   <item row="1" column="1">
-                   <widget class="QLineEdit" name="password_crear">
-                    <property name="echoMode">
-                     <enum>QLineEdit::Password</enum>
-                    </property>
+                   <widget class="QLineEdit" name="usuario_id_crear">
                     <property name="placeholderText">
-                     <string>Contraseña</string>
+                     <string>ID del usuario multado</string>
                     </property>
                    </widget>
                   </item>
-                  <item row="4" column="1">
-                   <widget class="QLineEdit" name="fecha_registro_crear">
+                  <item row="2" column="0">
+                   <widget class="QLabel" name="label_monto_crear">
+                    <property name="text">
+                     <string>Monto</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="2" column="1">
+                   <widget class="QLineEdit" name="monto_crear">
                     <property name="placeholderText">
-                     <string>Se colocará automáticamente</string>
+                     <string>Ej: 50.00</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="3" column="0">
+                   <widget class="QLabel" name="label_fecha_multa_crear">
+                    <property name="text">
+                     <string>Fecha Multa</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="3" column="1">
+                   <widget class="QLineEdit" name="fecha_multa_crear">
+                    <property name="placeholderText">
+                     <string>YYYY-MM-DD HH:MM:SS</string>
                     </property>
                    </widget>
                   </item>
                   <item row="4" column="0">
-                   <widget class="QLabel" name="label_fecha_registro_crear">
+                   <widget class="QLabel" name="label_estado_crear">
                     <property name="text">
-                     <string>Fecha Registro</string>
+                     <string>Estado</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="4" column="1">
+                   <widget class="QLineEdit" name="estado_crear">
+                    <property name="placeholderText">
+                     <string>Pendiente, Pagada</string>
                     </property>
                    </widget>
                   </item>
@@ -582,7 +579,7 @@ QLineEdit:focus {
                 <item>
                  <widget class="QPushButton" name="accion_guardar">
                   <property name="text">
-                   <string>Guardar Usuario</string>
+                   <string>Guardar Multa</string>
                   </property>
                  </widget>
                 </item>
@@ -595,14 +592,14 @@ QLineEdit:focus {
               <item>
                <layout class="QGridLayout" name="gridLayout_buscar">
                 <item row="0" column="0">
-                 <widget class="QLabel" name="label_id_buscar">
+                 <widget class="QLabel" name="label_multa_id_buscar">
                   <property name="text">
-                   <string>ID Usuario</string>
+                   <string>ID Multa</string>
                   </property>
                  </widget>
                 </item>
                 <item row="0" column="1">
-                 <widget class="QLineEdit" name="id_buscar">
+                 <widget class="QLineEdit" name="multa_id_buscar">
                   <property name="minimumSize">
                    <size>
                     <width>150</width>
@@ -622,58 +619,54 @@ QLineEdit:focus {
                  </widget>
                 </item>
                 <item row="1" column="0">
-                 <widget class="QLabel" name="label_username_buscar">
+                 <widget class="QLabel" name="label_prestamo_id_buscar">
                   <property name="text">
-                   <string>Username</string>
+                   <string>ID Préstamo</string>
                   </property>
                  </widget>
                 </item>
                 <item row="1" column="1">
-                 <widget class="QLineEdit" name="username_buscar"/>
+                 <widget class="QLineEdit" name="prestamo_id_buscar"/>
                 </item>
                 <item row="2" column="0">
-                 <widget class="QLabel" name="label_password_buscar">
+                 <widget class="QLabel" name="label_usuario_id_buscar">
                   <property name="text">
-                   <string>Password</string>
+                   <string>ID Usuario</string>
                   </property>
                  </widget>
                 </item>
                 <item row="2" column="1">
-                 <widget class="QLineEdit" name="password_buscar">
-                  <property name="echoMode">
-                   <enum>QLineEdit::Password</enum>
-                  </property>
-                 </widget>
+                 <widget class="QLineEdit" name="usuario_id_buscar"/>
                 </item>
                 <item row="3" column="0">
-                 <widget class="QLabel" name="label_nombre_buscar">
+                 <widget class="QLabel" name="label_monto_buscar">
                   <property name="text">
-                   <string>Nombre</string>
+                   <string>Monto</string>
                   </property>
                  </widget>
                 </item>
                 <item row="3" column="1">
-                 <widget class="QLineEdit" name="nombre_buscar"/>
+                 <widget class="QLineEdit" name="monto_buscar"/>
                 </item>
                 <item row="4" column="0">
-                 <widget class="QLabel" name="label_email_buscar">
+                 <widget class="QLabel" name="label_fecha_multa_buscar">
                   <property name="text">
-                   <string>Email</string>
+                   <string>Fecha Multa</string>
                   </property>
                  </widget>
                 </item>
                 <item row="4" column="1">
-                 <widget class="QLineEdit" name="email_buscar"/>
+                 <widget class="QLineEdit" name="fecha_multa_buscar"/>
                 </item>
                 <item row="5" column="0">
-                 <widget class="QLabel" name="label_fecha_registro_buscar">
+                 <widget class="QLabel" name="label_estado_buscar">
                   <property name="text">
-                   <string>Fecha Registro</string>
+                   <string>Estado</string>
                   </property>
                  </widget>
                 </item>
                 <item row="5" column="1">
-                 <widget class="QLineEdit" name="fecha_registro_buscar"/>
+                 <widget class="QLineEdit" name="estado_buscar"/>
                 </item>
                </layout>
               </item>
@@ -693,14 +686,14 @@ QLineEdit:focus {
                 <item>
                  <layout class="QGridLayout" name="gridLayout_actualizar">
                   <item row="0" column="0">
-                   <widget class="QLabel" name="label_id_actualizar">
+                   <widget class="QLabel" name="label_multa_id_actualizar">
                     <property name="text">
-                     <string>ID Usuario</string>
+                     <string>ID Multa</string>
                     </property>
                    </widget>
                   </item>
                   <item row="0" column="1">
-                   <widget class="QLineEdit" name="id_actualizar">
+                   <widget class="QLineEdit" name="multa_id_actualizar">
                     <property name="minimumSize">
                      <size>
                       <width>150</width>
@@ -720,65 +713,61 @@ QLineEdit:focus {
                    </widget>
                   </item>
                   <item row="1" column="0">
-                   <widget class="QLabel" name="label_username_actualizar">
+                   <widget class="QLabel" name="label_prestamo_id_actualizar">
                     <property name="text">
-                     <string>Username</string>
+                     <string>ID Préstamo</string>
                     </property>
                    </widget>
                   </item>
                   <item row="1" column="1">
-                   <widget class="QLineEdit" name="username_actualizar"/>
+                   <widget class="QLineEdit" name="prestamo_id_actualizar"/>
                   </item>
                   <item row="2" column="0">
-                   <widget class="QLabel" name="label_password_actualizar">
+                   <widget class="QLabel" name="label_usuario_id_actualizar">
                     <property name="text">
-                     <string>Password</string>
+                     <string>ID Usuario</string>
                     </property>
                    </widget>
                   </item>
                   <item row="2" column="1">
-                   <widget class="QLineEdit" name="password_actualizar">
-                    <property name="echoMode">
-                     <enum>QLineEdit::Password</enum>
-                    </property>
-                   </widget>
+                   <widget class="QLineEdit" name="usuario_id_actualizar"/>
                   </item>
                   <item row="3" column="0">
-                   <widget class="QLabel" name="label_nombre_actualizar">
+                   <widget class="QLabel" name="label_monto_actualizar">
                     <property name="text">
-                     <string>Nombre</string>
+                     <string>Monto</string>
                     </property>
                    </widget>
                   </item>
                   <item row="3" column="1">
-                   <widget class="QLineEdit" name="nombre_actualizar"/>
+                   <widget class="QLineEdit" name="monto_actualizar"/>
                   </item>
                   <item row="4" column="0">
-                   <widget class="QLabel" name="label_email_actualizar">
+                   <widget class="QLabel" name="label_fecha_multa_actualizar">
                     <property name="text">
-                     <string>Email</string>
+                     <string>Fecha Multa</string>
                     </property>
                    </widget>
                   </item>
                   <item row="4" column="1">
-                   <widget class="QLineEdit" name="email_actualizar"/>
+                   <widget class="QLineEdit" name="fecha_multa_actualizar"/>
                   </item>
                   <item row="5" column="0">
-                   <widget class="QLabel" name="label_fecha_registro_actualizar">
+                   <widget class="QLabel" name="label_estado_actualizar">
                     <property name="text">
-                     <string>Fecha Registro</string>
+                     <string>Estado</string>
                     </property>
                    </widget>
                   </item>
                   <item row="5" column="1">
-                   <widget class="QLineEdit" name="fecha_registro_actualizar"/>
+                   <widget class="QLineEdit" name="estado_actualizar"/>
                   </item>
                  </layout>
                 </item>
                 <item>
                  <widget class="QPushButton" name="accion_actualizar">
                   <property name="text">
-                   <string>Actualizar Usuario</string>
+                   <string>Actualizar Multa</string>
                   </property>
                  </widget>
                 </item>
@@ -791,14 +780,14 @@ QLineEdit:focus {
               <item>
                <layout class="QGridLayout" name="gridLayout_eliminar">
                 <item row="0" column="0">
-                 <widget class="QLabel" name="label_id_eliminar">
+                 <widget class="QLabel" name="label_multa_id_eliminar">
                   <property name="text">
-                   <string>ID Usuario</string>
+                   <string>ID Multa</string>
                   </property>
                  </widget>
                 </item>
                 <item row="0" column="1">
-                 <widget class="QLineEdit" name="id_eliminar">
+                 <widget class="QLineEdit" name="multa_id_eliminar">
                   <property name="minimumSize">
                    <size>
                     <width>150</width>
@@ -818,65 +807,61 @@ QLineEdit:focus {
                  </widget>
                 </item>
                 <item row="1" column="0">
-                 <widget class="QLabel" name="label_username_eliminar">
+                 <widget class="QLabel" name="label_prestamo_id_eliminar">
                   <property name="text">
-                   <string>Username</string>
+                   <string>ID Préstamo</string>
                   </property>
                  </widget>
                 </item>
                 <item row="1" column="1">
-                 <widget class="QLineEdit" name="username_eliminar"/>
+                 <widget class="QLineEdit" name="prestamo_id_eliminar"/>
                 </item>
                 <item row="2" column="0">
-                 <widget class="QLabel" name="label_password_eliminar">
+                 <widget class="QLabel" name="label_usuario_id_eliminar">
                   <property name="text">
-                   <string>Password</string>
+                   <string>ID Usuario</string>
                   </property>
                  </widget>
                 </item>
                 <item row="2" column="1">
-                 <widget class="QLineEdit" name="password_eliminar">
-                  <property name="echoMode">
-                   <enum>QLineEdit::Password</enum>
-                  </property>
-                 </widget>
+                 <widget class="QLineEdit" name="usuario_id_eliminar"/>
                 </item>
                 <item row="3" column="0">
-                 <widget class="QLabel" name="label_nombre_eliminar">
+                 <widget class="QLabel" name="label_monto_eliminar">
                   <property name="text">
-                   <string>Nombre</string>
+                   <string>Monto</string>
                   </property>
                  </widget>
                 </item>
                 <item row="3" column="1">
-                 <widget class="QLineEdit" name="nombre_eliminar"/>
+                 <widget class="QLineEdit" name="monto_eliminar"/>
                 </item>
                 <item row="4" column="0">
-                 <widget class="QLabel" name="label_email_eliminar">
+                 <widget class="QLabel" name="label_fecha_multa_eliminar">
                   <property name="text">
-                   <string>Email</string>
+                   <string>Fecha Multa</string>
                   </property>
                  </widget>
                 </item>
                 <item row="4" column="1">
-                 <widget class="QLineEdit" name="email_eliminar"/>
+                 <widget class="QLineEdit" name="fecha_multa_eliminar"/>
                 </item>
                 <item row="5" column="0">
-                 <widget class="QLabel" name="label_fecha_registro_eliminar">
+                 <widget class="QLabel" name="label_estado_eliminar">
                   <property name="text">
-                   <string>Fecha Registro</string>
+                   <string>Estado</string>
                   </property>
                  </widget>
                 </item>
                 <item row="5" column="1">
-                 <widget class="QLineEdit" name="fecha_registro_eliminar"/>
+                 <widget class="QLineEdit" name="estado_eliminar"/>
                 </item>
                </layout>
               </item>
               <item>
                <widget class="QPushButton" name="accion_eliminar">
                 <property name="text">
-                 <string>Eliminar Usuario</string>
+                 <string>Eliminar Multa</string>
                 </property>
                </widget>
               </item>
@@ -892,9 +877,9 @@ QLineEdit:focus {
                </widget>
               </item>
               <item>
-               <widget class="QTableWidget" name="tabla_usuarios">
+               <widget class="QTableWidget" name="tabla_multas">
                 <property name="styleSheet">
-                 <string notr="true">/* Tabla personalizada para usuarios */
+                 <string notr="true">/* Tabla personalizada para multas */
 QTableWidget {
     background-color: #1e1e1e;
     color: #e0e0e0;
@@ -930,27 +915,27 @@ QTableWidget::item {
                 </column>
                 <column>
                  <property name="text">
-                  <string>Username</string>
+                  <string>Préstamo ID</string>
                  </property>
                 </column>
                 <column>
                  <property name="text">
-                  <string>Password</string>
+                  <string>Usuario ID</string>
                  </property>
                 </column>
                 <column>
                  <property name="text">
-                  <string>Nombre</string>
+                  <string>Monto</string>
                  </property>
                 </column>
                 <column>
                  <property name="text">
-                  <string>Email</string>
+                  <string>Fecha Multa</string>
                  </property>
                 </column>
                 <column>
                  <property name="text">
-                  <string>Fecha Registro</string>
+                  <string>Estado</string>
                  </property>
                 </column>
                </widget>

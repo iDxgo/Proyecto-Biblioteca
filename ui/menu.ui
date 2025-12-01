@@ -1,0 +1,308 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>750</width>
+    <height>650</height>
+   </rect>
+  </property>
+  <property name="font">
+   <font>
+    <family>Segoe UI,SF Pro Display,Roboto,sans-serif</family>
+    <pointsize>-1</pointsize>
+    <weight>50</weight>
+    <bold>false</bold>
+   </font>
+  </property>
+  <property name="windowTitle">
+   <string>Sistema de Biblioteca</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">/* === Estilo general - Tema Oscuro Biblioteca === */
+QMainWindow {
+    background-color: #121212;
+    color: #e0e0e0;
+    font-family: &quot;Segoe UI&quot;, &quot;SF Pro Display&quot;, &quot;Roboto&quot;, sans-serif;
+    font-size: 14px;
+    font-weight: 400;
+}
+
+/* === Frames === */
+QFrame {
+    background-color: #1e1e1e;
+    border-radius: 8px;
+    border: 1px solid #2d2d2d;
+}
+
+/* Barra superior */
+#frame_superior {
+    background-color: #1a1a1a;
+    border: none;
+    border-radius: 0px;
+    border-bottom: 2px solid #7b1fa2;
+}
+
+/* Panel lateral */
+#frame_lateral {
+    background-color: #1a1a1a;
+    border-right: 2px solid #7b1fa2;
+    border-radius: 0px;
+}
+
+/* Área principal */
+#frame_paginas {
+    background-color: #1e1e1e;
+    border-radius: 0px;
+}
+
+/* === Botones === */
+QPushButton {
+    background-color: #4a148c;
+    color: #ffffff;
+    border: 1px solid #6a1b9a;
+    border-radius: 6px;
+    padding: 10px 16px;
+    font-weight: 500;
+    font-size: 24px;
+    letter-spacing: 0.5px;
+    background: qlineargradient(x1:0, y1:0, x2:0, y2:1,
+        stop:0 #7b1fa2, stop:1 #4a148c);
+}
+
+QPushButton:hover {
+    background-color: #6a1b9a;
+    color: #ffffff;
+    border: 1px solid #8e24aa;
+}
+
+QPushButton:pressed {
+    background-color: #38006b;
+    color: #ffffff;
+    border: 1px solid #4a148c;
+    background: qlineargradient(x1:0, y1:0, x2:0, y2:1,
+        stop:0 #4a148c, stop:1 #38006b);
+}
+
+/* Botón principal (Menú) */
+#boton_menu {
+    background-color: #7b1fa2;
+    color: white;
+    border: none;
+    font-weight: 600;
+    background: qlineargradient(x1:0, y1:0, x2:0, y2:1,
+        stop:0 #9c27b0, stop:1 #7b1fa2);
+}
+#boton_menu:hover {
+    background-color: #8e24aa;
+    background: qlineargradient(x1:0, y1:0, x2:0, y2:1,
+        stop:0 #ab47bc, stop:1 #8e24aa);
+}
+#boton_menu:pressed {
+    background-color: #6a1b9a;
+    background: qlineargradient(x1:0, y1:0, x2:0, y2:1,
+        stop:0 #7b1fa2, stop:1 #6a1b9a);
+}
+
+/* Botón salir */
+#boton_salir {
+    background-color: #c62828;
+    color: white;
+    border: none;
+    background: qlineargradient(x1:0, y1:0, x2:0, y2:1,
+        stop:0 #ef5350, stop:1 #b71c1c);
+}
+#boton_salir:hover {
+    background-color: #d32f2f;
+    background: qlineargradient(x1:0, y1:0, x2:0, y2:1,
+        stop:0 #f44336, stop:1 #c62828);
+}
+#boton_salir:pressed {
+    background-color: #b71c1c;
+    background: qlineargradient(x1:0, y1:0, x2:0, y2:1,
+        stop:0 #c62828, stop:1 #b71c1c);
+}
+
+/* Botones del menú */
+#boton_usuarios, #boton_libros, #boton_prestamos, #boton_multas {
+    background-color: #2d2d2d;
+    border: 1px solid #424242;
+    color: #bdbdbd;
+    font-weight: 500;
+    font-size: 18px;
+    text-align: center;
+    padding: 20px 16px;
+    margin: 5px;
+}
+
+#boton_usuarios:hover, 
+#boton_libros:hover, 
+#boton_prestamos:hover, 
+#boton_multas:hover {
+    background-color: #333333;
+    border: 1px solid #7b1fa2;
+    color: #e0e0e0;
+    background: qlineargradient(x1:0, y1:0, x2:1, y2:0,
+        stop:0 #2d2d2d, stop:1 #4a148c);
+}
+
+#boton_usuarios:pressed, 
+#boton_libros:pressed, 
+#boton_prestamos:pressed, 
+#boton_multas:pressed {
+    background-color: #4a148c;
+    border: 1px solid #6a1b9a;
+    color: #ffffff;
+}
+
+/* === Labels === */
+QLabel {
+    color: #bdbdbd;
+    font-weight: 500;
+    font-size: 14px;
+    border: none;
+}
+
+/* Label para el logo */
+#label_logo {
+    color: #7b1fa2;
+    font-size: 40px;
+}
+
+/* === Layouts === */
+QVBoxLayout, QHBoxLayout {
+    spacing: 12px;
+}</string>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <layout class="QVBoxLayout" name="verticalLayout_principal">
+    <item>
+     <widget class="QFrame" name="frame_superior">
+      <property name="minimumSize">
+       <size>
+        <width>0</width>
+        <height>100</height>
+       </size>
+      </property>
+      <layout class="QHBoxLayout" name="horizontalLayout_logo">
+       <item>
+        <spacer name="horizontalSpacer_izq">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>40</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item>
+        <widget class="QLabel" name="label_logo">
+         <property name="text">
+          <string>≡ MENÚ</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <spacer name="horizontalSpacer_der">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>40</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+      </layout>
+     </widget>
+    </item>
+    <item>
+     <widget class="QFrame" name="frame_principal">
+      <layout class="QVBoxLayout" name="verticalLayout_menu">
+       <item>
+        <widget class="QPushButton" name="boton_usuarios">
+         <property name="text">
+          <string>👥  USUARIOS</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="boton_libros">
+         <property name="text">
+          <string>📚  LIBROS</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="boton_prestamos">
+         <property name="text">
+          <string>📋  PRÉSTAMOS</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="boton_multas">
+         <property name="text">
+          <string>💵  MULTAS</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+    </item>
+    <item>
+     <widget class="QFrame" name="frame_inferior">
+      <layout class="QHBoxLayout" name="horizontalLayout_salir">
+       <item>
+        <spacer name="horizontalSpacer_salir_izq">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>40</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item>
+        <widget class="QPushButton" name="boton_salir">
+         <property name="text">
+          <string>SALIR</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <spacer name="horizontalSpacer_salir_der">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>40</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+      </layout>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

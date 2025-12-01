@@ -1,9 +1,5 @@
 import reflex as rx
 
 config = rx.Config(
-    app_name="Proyecto_Biblioteca",
-    plugins=[
-        rx.plugins.SitemapPlugin(),
-        rx.plugins.TailwindV4Plugin(),
-    ]
+    app_name="biblioteca",  # Debe coincidir con el nombre de la carpeta
 )
